@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:drawable="@drawable/vd_robo_eyebrow">
+
+
+
+    <target
+        android:name="eye_brow">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="500"
+                android:interpolator="@android:interpolator/linear"
+                android:propertyName="pathData"
+                android:valueFrom="M 0,0 C 50,-40 130,-40 200,0"
+                android:valueTo="M0,0 C 50,0 130,0 200,0"
+                android:valueType="pathType"/>
+        </aapt:attr>
+    </target>
+
+    <target android:name="eye_brow_group">
+    <aapt:attr name="android:animation">
+
+        <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+            android:duration="500"
+            android:propertyName="translateX"
+            android:valueFrom="0"
+            android:valueTo="50"
+            android:interpolator="@android:interpolator/linear"
+            >
+
+        </objectAnimator>
+    </aapt:attr>
+    </target>
+
+    <target android:name="eye_brow_rotation_group">
+        <aapt:attr name="android:animation">
+
+            <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+                android:duration="500"
+                android:propertyName="rotation"
+                android:valueFrom="-10"
+                android:valueTo="20"
+                android:interpolator="@android:interpolator/linear"
+                >
+
+            </objectAnimator>
+        </aapt:attr>
+    </target>
+</animated-vector>

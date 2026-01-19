@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<set xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:ordering="together">-->
+
+<objectAnimator android:duration="500"
+    android:valueFrom="20"
+    android:valueTo="50"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:propertyName="translateX"
+    android:interpolator="@android:interpolator/linear"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+<!--    <objectAnimator android:duration="500"-->
+<!--        android:valueFrom="23"-->
+<!--        android:valueTo="33"-->
+<!--        android:repeatCount="infinite"-->
+<!--        android:repeatMode="reverse"-->
+<!--        android:propertyName="translateX"-->
+<!--        android:interpolator="@android:interpolator/linear"/>-->
+
+<!--</set>-->

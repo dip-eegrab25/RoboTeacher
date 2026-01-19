@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="90dp"
+    android:height="90dp"
+    android:viewportHeight="90"
+    android:viewportWidth="90">
+
+    <group android:name="smile"
+        android:translateX="10"
+        android:translateY="40">
+
+        <path android:pathData="M0,0 C0,45 65,45 65,0"
+            android:trimPathStart="0"
+            android:trimPathEnd="1"
+            android:strokeColor="@color/black"
+            android:strokeWidth="5"
+            android:name="smilePath"/>
+
+
+    </group>
+</vector>

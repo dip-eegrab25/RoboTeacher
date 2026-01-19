@@ -1,0 +1,12 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vd_pathmorph_sad">
+
+    <target
+        android:animation="@animator/anim_smile_trim"
+        android:name="sad_path"/>
+
+    <target
+        android:animation="@animator/anim_smile_trim_end"
+        android:name="sad_path"/>
+
+</animated-vector>

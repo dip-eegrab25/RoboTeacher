@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="90dp"
+    android:height="90dp"
+    android:viewportHeight="90"
+    android:viewportWidth="90">
+
+    <group android:name="eye"
+        android:translateX="12"
+        android:translateY="50"
+        android:pivotX="38.5"
+        android:pivotY="25">
+
+        <path android:pathData="M0,0 C0,45 65,45 65,0 M0,0 C0,-45 65,-45 65,0 "
+            android:trimPathStart="0"
+            android:trimPathEnd="1"
+            android:fillColor="@color/white"
+            android:name="eyeball_path"/>
+
+
+    </group>
+
+    <group
+        android:translateX="30"
+        android:translateY="50"
+        android:pivotX="20.5"
+        android:pivotY="25"
+        android:name="eyeball_left"
+        >
+
+        <group android:scaleY="1"
+            android:name="scale_eye_left"
+            android:translateX="-12"
+            android:translateY="8">
+
+            <path android:pathData="M0,0 C0,22 29,22 29,0   M0,0 C0,-22 29,-22 29,0 "
+                android:trimPathStart="0"
+                android:trimPathEnd="1"
+                android:fillColor="@color/black"
+                android:name="smilePath"/>
+
+            <group
+                android:translateX="5"
+                android:translateY="-5"
+                android:name="eyeball_left_inner">
+
+
+
+                <path android:pathData="M0,0 C0,8 10,8 10,0 M0,0 C0,-8 10,-8 10,0"
+                    android:trimPathStart="0"
+                    android:trimPathEnd="1"
+                    android:fillColor="@color/white"
+                    android:name="smilePath"/>
+            </group>
+        </group>
+    </group>
+
+
+</vector>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@color/window_background"
+    android:background="@drawable/curved_dialog">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/medium_text_size"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/default_small_margin"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/your_feedback"
+        android:visibility="gone"
+        android:id="@+id/feedback_header"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/feedback_header"
+        android:layout_marginTop="@dimen/default_medium_margin"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:text="@string/rate_your_experience"
+        android:id="@+id/feedback_sub_header"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedback_sub_header"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:id="@+id/linear_layout_stars">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="@dimen/default_small_margin"
+            android:src="@drawable/star_selector"
+
+            />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="@dimen/default_small_margin"
+            android:src="@drawable/star_selector"
+
+            />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="@dimen/default_small_margin"
+            android:src="@drawable/star_selector"
+
+            />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="@dimen/default_small_margin"
+            android:src="@drawable/star_selector"
+
+            />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="@dimen/default_small_margin"
+            android:src="@drawable/star_selector"
+
+            />
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_button_height"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/default_medium_margin"
+        android:layout_marginStart="@dimen/default_medium_margin"
+        android:layout_marginEnd="@dimen/default_medium_margin"
+        android:layout_marginTop="@dimen/default_medium_margin"
+        android:text="Submit"
+        android:textSize="@dimen/medium_text_size"
+        android:backgroundTint="@color/yellow_panda_logo_color"
+        android:id="@+id/review_submit_button"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear_layout_stars"
+        android:layout_above="@id/review_submit_button"
+        android:layout_marginTop="@dimen/default_medium_margin"
+        android:layout_marginStart="@dimen/default_medium_margin"
+        android:layout_marginEnd="@dimen/default_medium_margin"
+        android:background="@drawable/edit_text_curved_background"
+        android:paddingTop="@dimen/default_padding"
+        android:paddingStart="15dp"
+        android:textSize="@dimen/small_text_size"
+        android:gravity="start|top"
+        android:hint="@string/write_a_review"
+        android:id="@+id/review_edit_text"/>
+
+
+</RelativeLayout>

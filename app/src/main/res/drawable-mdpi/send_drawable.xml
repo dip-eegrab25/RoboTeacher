@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item android:width="@dimen/mic_default_width"
+        android:height="@dimen/mic_default_height">
+        <shape android:shape="oval">
+
+            <solid android:color="@color/yellow_panda_logo_color"/>
+
+        </shape>
+    </item>
+
+    <item
+
+
+        android:gravity="center"
+
+        android:drawable="@drawable/send_icon">
+
+    </item>
+
+
+
+
+</layer-list>

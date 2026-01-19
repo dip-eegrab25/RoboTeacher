@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sad"
+        android:drawable="@drawable/vd_pathmorph_sad"
+        android:state_checked="true"/>
+
+    <item
+        android:id="@+id/smile"
+        android:drawable="@drawable/vd_pathmorph_smile"/>
+
+    <transition
+        android:drawable="@drawable/avd_pathmorph_smile_to_sad"
+        android:fromId="@id/smile"
+        android:toId="@id/sad"/>
+
+    <transition
+        android:drawable="@drawable/avd_pathmorph_sad_to_smile"
+        android:fromId="@id/sad"
+        android:toId="@id/smile"/>
+
+</animated-selector>

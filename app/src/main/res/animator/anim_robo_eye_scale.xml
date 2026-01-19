@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator android:duration="500"
+    android:valueFrom="1"
+    android:valueTo="0"
+    android:repeatCount="infinite"
+    android:repeatMode="reverse"
+    android:propertyName="scaleY"
+
+    android:interpolator="@android:interpolator/linear"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

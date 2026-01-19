@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+<!--    -->
+<!--    &lt;!&ndash; Robot Head &ndash;&gt;-->
+<!--    <path-->
+<!--        android:pathData="M25,25 L175,25 Q175,25 175,55 L175,145 Q175,175 145,175 L55,175 Q25,175 25,145 L25,55 Q25,25 55,25 Z"-->
+<!--        android:fillColor="#e2e8f0"-->
+<!--        android:strokeColor="#94a3b8"-->
+<!--        android:strokeWidth="3"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Antenna &ndash;&gt;-->
+<!--    <path-->
+<!--        android:pathData="M100,25 L100,10"-->
+<!--        android:strokeColor="#94a3b8"-->
+<!--        android:strokeWidth="3"-->
+<!--        android:strokeLineCap="round"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Antenna Light &ndash;&gt;-->
+<!--    <circle-->
+<!--        android:cx="100"-->
+<!--        android:cy="8"-->
+<!--        android:r="4"-->
+<!--        android:fillColor="#ef4444"/>-->
+
+<!--    -->
+<!--    &lt;!&ndash; Left Eye &ndash;&gt;-->
+<!--    <ellipse-->
+<!--        android:cx="70"-->
+<!--        android:cy="80"-->
+<!--        android:rx="15"-->
+<!--        android:ry="12.5"-->
+<!--        android:fillColor="#f8fafc"-->
+<!--        android:strokeColor="#334155"-->
+<!--        android:strokeWidth="2"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Right Eye &ndash;&gt;-->
+<!--    <ellipse-->
+<!--        android:cx="130"-->
+<!--        android:cy="80"-->
+<!--        android:rx="15"-->
+<!--        android:ry="12.5"-->
+<!--        android:fillColor="#f8fafc"-->
+<!--        android:strokeColor="#334155"-->
+<!--        android:strokeWidth="2"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Left Pupil &ndash;&gt;-->
+<!--    <circle-->
+<!--        android:cx="70"-->
+<!--        android:cy="80"-->
+<!--        android:r="6"-->
+<!--        android:fillColor="#1e293b"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Right Pupil &ndash;&gt;-->
+<!--    <circle-->
+<!--        android:cx="130"-->
+<!--        android:cy="80"-->
+<!--        android:r="6"-->
+<!--        android:fillColor="#1e293b"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Eye Shine Left &ndash;&gt;-->
+<!--    <circle-->
+<!--        android:cx="68"-->
+<!--        android:cy="78"-->
+<!--        android:r="2"-->
+<!--        android:fillColor="#ffffff"-->
+<!--        android:fillAlpha="0.8"/>-->
+<!--    -->
+<!--    &lt;!&ndash; Eye Shine Right &ndash;&gt;-->
+<!--    <circle-->
+<!--        android:cx="128"-->
+<!--        android:cy="78"-->
+<!--        android:r="2"-->
+<!--        android:fillColor="#ffffff"-->
+<!--        android:fillAlpha="0.8"/>-->
+<!--    -->
+
+<!--    &lt;!&ndash; Eyebrows &ndash;&gt;-->
+<!--    <path-->
+<!--        android:pathData="M50,45 L80,45"-->
+<!--        android:strokeColor="#64748b"-->
+<!--        android:strokeWidth="4"-->
+<!--        android:strokeLineCap="round"/>-->
+<!--    <path-->
+<!--        android:pathData="M115,45 L145,45"-->
+<!--        android:strokeColor="#64748b"-->
+<!--        android:strokeWidth="4"-->
+<!--        android:strokeLineCap="round"/>-->
+    
+    <!-- Mouth -->
+    <path
+        android:pathData="M70,125 L130,125"
+        android:strokeColor="#dc2626"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:fillColor="@color/black"/>
+
+    
+
+    
+    <!-- Anger Lines -->
+    <path
+        android:pathData="M45,35 L55,45"
+        android:strokeColor="#ef4444"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"/>
+    <path
+        android:pathData="M155,35 L145,45"
+        android:strokeColor="#ef4444"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"/>
+    
+
+</vector>

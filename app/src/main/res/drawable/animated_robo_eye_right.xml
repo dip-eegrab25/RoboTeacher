@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vd_robo_eye_right">
+
+<!--    <target-->
+<!--        android:animation="@animator/anim_robo_eye_right"-->
+<!--        android:name="eyeball_right"/>-->
+
+<!--    <target-->
+<!--        android:animation="@animator/anim_robo_eye_right_inner"-->
+<!--        android:name="eyeball_right_inner"/>-->
+
+    <target
+        android:animation="@animator/anim_robo_eye_scale"
+        android:name="scale_eye_right"/>
+
+</animated-vector>

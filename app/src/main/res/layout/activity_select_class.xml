@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:text="Dipanjan"/>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintHeight_percent="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/animated_bar">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/animated_line"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/animated_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/animated_bar"
+        app:layout_constraintBottom_toBottomOf="@id/animated_bar"
+
+        android:orientation="vertical">
+
+        <include layout="@layout/single_item_curved_background_text_normal_right"/>
+
+        <include layout="@layout/single_item_curved_background_text_normal_right"/>
+
+        <include layout="@layout/single_item_curved_background_text_normal_right"/>
+
+        <include layout="@layout/single_item_curved_background_text_rotate_positive"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/animated_bar"
+        app:layout_constraintTop_toTopOf="@id/animated_bar"
+        app:layout_constraintBottom_toBottomOf="@id/animated_bar"
+
+        android:orientation="vertical">
+
+        <include layout="@layout/single_item_curved_background_text_normal_left"/>
+
+        <include layout="@layout/single_item_curved_background_text_normal_left"/>
+
+        <include layout="@layout/single_item_curved_background_text_normal_left"/>
+
+        <include layout="@layout/single_item_curved_background_text_rotate_negative"/>
+
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

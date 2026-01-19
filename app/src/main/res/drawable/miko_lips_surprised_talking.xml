@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <group android:name="lips_group"
+        android:rotation="0"
+        android:pivotX="100"
+        android:pivotY="100"
+        android:translateX="30"
+        android:translateY="40">
+
+        <group android:name="upper_lip"
+            android:scaleY="0.79">
+
+            <!-- Upper Lip -->
+            <path
+                android:pathData="M 0 60
+              Q 40 20 80 20
+              Q 120 20 160 60"
+                android:fillColor="#c53030"
+                android:strokeColor="#991b1b"
+                android:strokeWidth="1"/>
+
+        </group>
+
+        <group android:name="lower_lip">
+
+            <!-- Lower Lip -->
+            <path
+                android:pathData="M 0 60
+              Q 40 100 80 100
+              Q 120 100 160 60"
+                android:fillColor="#dc2626"
+                android:strokeColor="#991b1b"
+                android:strokeWidth="1"/>
+
+        </group>
+
+        <!-- Lip shine effect -->
+        <!--        <path android:name="lip_shine"-->
+        <!--              android:pathData="M 41.666666666666664,15 Q 50,11 58.333333333333336,15"-->
+        <!--              android:strokeColor="#ffffff"-->
+        <!--              android:strokeWidth="1"-->
+        <!--              android:fillAlpha="0.3"/>-->
+
+    </group>
+</vector>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/vd_robo_eyebrow_angry"
+        android:state_selected="true"
+        android:id="@+id/angry"/>
+
+    <item android:drawable="@drawable/vd_robo_eyebrow"
+        android:id="@+id/normal"/>
+
+    <transition
+        android:fromId="@id/normal"
+        android:toId="@id/angry"
+        android:drawable="@drawable/avd_pathmorph_eyebrow_normal_angry"/>
+
+    <transition
+        android:fromId="@id/angry"
+        android:toId="@id/normal"
+        android:drawable="@drawable/avd_pathmorph_eyebrow_angry_normal"/>
+
+
+
+</animated-selector>
