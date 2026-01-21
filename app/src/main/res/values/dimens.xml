@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="medium_text_size">18sp</dimen>
+    <dimen name="item_margin">15dp</dimen>
+    <dimen name="default_medium_margin">20dp</dimen>
+    <dimen name="default_small_margin">5dp</dimen>
+    <dimen name="large_text_size">50sp</dimen>
+    <dimen name="default_padding">5dp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
+    <dimen name="small_padding">10dp</dimen>
+    <dimen name="default_line_height">10dp</dimen>
+    <dimen name="large_line_height">40dp</dimen>
+    <dimen name="default_curved_radius">20dp</dimen>
+    <dimen name="mic_default_width">45dp</dimen>
+    <dimen name="mic_default_height">45dp</dimen>
+    <dimen name="mic_icon_default_width">24dp</dimen>
+    <dimen name="mic_icon_default_height">24dp</dimen>
+    <dimen name="default_width_countdown">120dp</dimen>
+    <dimen name="default_height_countdown">120dp</dimen>
+    <dimen name="default_button_height">100dp</dimen>
+    <dimen name="small_curved_radius">10</dimen>
+    <dimen name="large_text_size2">15sp</dimen>
+    <dimen name="large_line_height2">10dp</dimen>
+    <dimen name="minute_curve">5dp</dimen>
+    <dimen name="default_icon_margin">16dp</dimen>
+</resources>

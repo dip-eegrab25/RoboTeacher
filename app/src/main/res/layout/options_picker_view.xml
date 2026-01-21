@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    android:background="@color/border_selected"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/classs"-->
+<!--        style="@style/defaultMediumTextStyle"-->
+<!--        android:textSize="30sp"-->
+<!--        android:layout_margin="@dimen/default_small_margin"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="7"-->
+<!--        style="@style/defaultTextStyle"-->
+<!--        android:textColor="#d3d3d3"-->
+<!--        android:layout_margin="@dimen/default_small_margin"-->
+<!--        android:id="@+id/txt_class"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/subject"-->
+<!--        style="@style/defaultMediumTextStyle"-->
+<!--        android:textSize="30sp"-->
+<!--        android:layout_marginTop="@dimen/default_medium_margin"-->
+<!--        android:layout_marginStart="@dimen/default_small_margin"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Mathematics"-->
+<!--        style="@style/defaultTextStyle"-->
+<!--        android:textColor="#d3d3d3"-->
+<!--        android:layout_margin="@dimen/default_small_margin"-->
+<!--        android:id="@+id/txt_subject"/>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/type"-->
+<!--        style="@style/defaultMediumTextStyle"-->
+<!--        android:textSize="30sp"-->
+<!--        android:layout_marginTop="@dimen/default_medium_margin"-->
+<!--        android:layout_marginStart="@dimen/default_small_margin"/>-->
+
+<!--    <RadioGroup-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/radio_group">-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text="@string/unit"/>-->
+
+<!--        <RadioButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:text="@string/chapter"/>-->
+<!--    </RadioGroup>-->
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Unit/Chapter"-->
+<!--        style="@style/defaultMediumTextStyle"-->
+<!--        android:textSize="30sp"-->
+<!--        android:layout_marginTop="@dimen/default_medium_margin"-->
+<!--        android:layout_marginStart="@dimen/default_small_margin"-->
+<!--        android:id="@+id/unit_chapter_view"/>-->
+
+<!--    <ListView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="@dimen/default_small_margin"-->
+<!--        android:id="@+id/picker_list">-->
+
+<!--    </ListView>-->
+
+
+
+<!--</LinearLayout>-->
+
+<!--<LinearLayout android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="@color/yellow_panda_logo_color"-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--<ScrollView android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:padding="16dp"-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:divider="@drawable/divider_line"-->
+<!--        android:showDividers="middle"-->
+<!--        android:dividerPadding="12dp"-->
+<!--        >-->
+
+<!--        &lt;!&ndash; Class &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:text="Class"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            style="@style/defaultMediumTextStyle"-->
+
+<!--            android:textStyle="bold"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txt_class"-->
+<!--            android:text="7"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="16sp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        &lt;!&ndash; Subject &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:text="Subject"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            style="@style/defaultMediumTextStyle"-->
+<!--            android:textStyle="bold"-->
+<!--            android:paddingTop="16dp"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txt_subject"-->
+<!--            android:text="Mathematics"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="16sp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        &lt;!&ndash; Type &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:text="Type"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            style="@style/defaultMediumTextStyle"-->
+<!--            android:textStyle="bold"-->
+<!--            android:paddingTop="16dp"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        <RadioGroup-->
+<!--            android:id="@+id/radio_group"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/rb_unit"-->
+<!--                android:text="Unit"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/rb_chapter"-->
+<!--                android:text="Chapter"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </RadioGroup>-->
+
+<!--        &lt;!&ndash; Unit / Chapter &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:text="Unit / Chapter"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            style="@style/defaultMediumTextStyle"-->
+<!--            android:textStyle="bold"-->
+<!--            android:paddingTop="16dp"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/unit_chapter_view"/>-->
+
+<!--        <ListView xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/picker_list">-->
+
+<!--        </ListView>-->
+
+<!--&lt;!&ndash;        <LinearLayout&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/unit_list"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:orientation="vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content">&ndash;&gt;-->
+
+<!--&lt;!&ndash;            &lt;!&ndash; Dynamically populate &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            <CheckBox&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="1"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="@android:color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <CheckBox&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="2"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="@android:color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"/>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <CheckBox&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="3"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="@android:color/white"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="wrap_content"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </LinearLayout>&ndash;&gt;-->
+
+<!--    </LinearLayout>-->
+<!--</ScrollView>-->
+<!--</LinearLayout>-->
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/drawer_gradient"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:padding="16dp">-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <TextView
+                android:text="Study Panel"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:paddingBottom="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <!-- Class -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:text="Class"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/txt_class"
+                        android:text="7"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:paddingTop="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Subject -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:text="Subject"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#555"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/txt_subject"
+                        android:text="Mathematics"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:paddingTop="4dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Type -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:text="Type"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#555"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioGroup
+                        android:id="@+id/radio_group"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp">
+
+                        <RadioButton
+                            android:text="Unit"
+                            android:checked="true"
+                            android:textColor="#000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <RadioButton
+                            android:text="Chapter"
+                            android:layout_marginStart="16dp"
+                            android:textColor="#000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RadioGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Unit / Chapter -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:text="Unit / Chapter"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#555"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/unit_chapter_view"/>
+
+                    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:id="@+id/picker_list"/>
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:paddingTop="8dp">-->
+
+<!--                        <CheckBox android:text="1" android:id="@+id/check1"/>-->
+<!--                        <CheckBox android:text="2" android:id="@+id/check2"/>-->
+<!--                        <CheckBox android:text="3" android:id="@+id/check3"/>-->
+<!--                        <CheckBox android:text="4" android:id="@+id/check4"/>-->
+<!--                        <CheckBox android:text="5" android:id="@+id/check5"/>-->
+<!--                    </LinearLayout>-->
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+<!--    </ScrollView>-->
+</LinearLayout>

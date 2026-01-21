@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">RoboTeacher</string>
+    <string name="enter">Enter</string>
+    <string name="hint_chat_edittext">Just say topic or you can write here. I am ready to go.</string>
+    <string name="your_feedback">Your Feedback</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="rate_your_experience">Rate your experience</string>
+    <string name="anything_else">Anything Else</string>
+    <string name="pdfs">Pdfs</string>
+    <string name="invalid_pin">Invalid Pin</string>
+    <string name="please_enter_otp">Please enter OTP</string>
+    <string name="error_login">Error Logging In</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+</resources>

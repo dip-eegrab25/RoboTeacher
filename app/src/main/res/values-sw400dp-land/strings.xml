@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="your_feedback">Your Feedback</string>
+    <string name="submit">Submit</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="rate_your_experience">Rate your experience</string>
+    <string name="anything_else">Anything Else</string>
+    <string name="classs">Class</string>
+    <string name="subject">Subject</string>
+    <string name="type">Type</string>
+    <string name="unit">Unit</string>
+    <string name="chapter">Chapter</string>
+    <string name="how_do_you_rate_this_class">How do you rate this class</string>
+    <string name="pdfs">Pdfs</string>
+    <string name="invalid_pin">Invalid Pin</string>
+    <string name="please_enter_otp">Please enter OTP</string>
+    <string name="error_login">Error Logging In</string>
+    <string name="english">English</string>
+    <string name="hindi">Hindi</string>
+    <string name="app_name">RoboTeacher</string>
+    <string name="enter">Enter</string>
+    <string name="hint_chat_edittext">Just say topic or you can write here. I am ready to go.</string>
+</resources>

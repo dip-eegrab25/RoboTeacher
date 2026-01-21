@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="border_selected">#349CF7</color>
+    <color name="text_selected_background">#364755</color>
+    <color name="text_background_unselected">#00182C</color>
+    <color name="holder_color">#233A4D</color>
+    <color name="window_background">#00182C</color>
+    <color name="spike_color">#6EFAF6</color>
+    <color name="yellow_panda_logo_color">#FFDA03</color>
+    <color name="text_color_chat">#54718d</color>
+    <color name="chat_edit_text_color">#09161f</color>
+</resources>

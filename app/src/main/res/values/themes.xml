@@ -1,0 +1,68 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RoboTeacher" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.RoboTeacher" parent="Base.Theme.RoboTeacher" />
+
+<!--    <style name="Theme.App.Starting" parent="Theme.SplashScreen">-->
+<!--        &lt;!&ndash; Set the splash screen background, animated icon, and animation-->
+<!--        duration. &ndash;&gt;-->
+<!--        -->
+
+<!--        &lt;!&ndash; Use windowSplashScreenAnimatedIcon to add a drawable or an animated-->
+<!--             drawable. One of these is required. &ndash;&gt;-->
+<!--        <item name="windowSplashScreenAnimatedIcon">@drawable/...</item>-->
+<!--        &lt;!&ndash; Required for animated icons. &ndash;&gt;-->
+<!--        <item name="windowSplashScreenAnimationDuration">200</item>-->
+
+<!--        &lt;!&ndash; Set the theme of the Activity that directly follows your splash-->
+<!--        screen. This is required. &ndash;&gt;-->
+<!--        <item name="postSplashScreenTheme">@style/Theme.App</item>-->
+<!--    </style>-->
+
+    <style name="defaultTextStyle" parent="TextAppearance.Material3.BodyMedium">
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="lineHeight">@dimen/default_line_height</item>
+
+    </style>
+
+    <style name="defaultLargeTextStyle" parent="TextAppearance.Material3.BodyLarge">
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="lineHeight">@dimen/large_line_height</item>
+
+
+    </style>
+
+    <style name="defaultLargeTextStyle2" parent="TextAppearance.Material3.BodyLarge">
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/large_text_size2</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="lineHeight">@dimen/large_line_height2</item>
+
+
+    </style>
+
+    <style name="defaultMediumTextStyle" parent="TextAppearance.Material3.BodyLarge">
+
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
+        <item name="android:fontFamily">sans-serif</item>
+
+    </style>
+
+
+
+</resources>

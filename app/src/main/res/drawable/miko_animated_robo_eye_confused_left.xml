@@ -1,0 +1,22 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/miko_eye_left_confused">
+
+
+
+    <!--    <target-->
+    <!--        android:animation="@animator/anim_robo_eye_left"-->
+    <!--        android:name="eyeball_left"/>-->
+
+    <!--    <target-->
+    <!--        android:animation="@animator/anim_robo_eye_left_inner"-->
+    <!--        android:name="eyeball_left_inner"/>-->
+
+    <!--    <target-->
+    <!--        android:animation=""-->
+    <!--        android:name=""-->
+
+    <target
+        android:animation="@animator/anim_robo_eye_scale"
+        android:name="scale_eye_left"/>
+
+</animated-vector>

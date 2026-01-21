@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/web_view"/>
+
+    <com.anim.circleanim.MyAnim
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        custom:startColor="@color/white"
+        custom:secondColor="@color/yellow_panda_logo_color"
+        custom:thirdColor="@color/window_background"
+        custom:fourthColor="@color/black"
+        custom:full="true"
+        custom:rotate="true"
+        custom:duration="1000"
+        custom:clrbackground="@android:color/darker_gray"
+        android:id="@+id/progress_anim"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back"
+        android:layout_margin="@dimen/default_medium_margin"
+        android:id="@+id/back"/>
+
+<!--    <ProgressBar-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        custom:layout_constraintStart_toStartOf="parent"-->
+<!--        custom:layout_constraintEnd_toEndOf="parent"-->
+<!--        custom:layout_constraintTop_toTopOf="parent"-->
+<!--        custom:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:id="@+id/progress_anim"/>-->
+
+
+
+</RelativeLayout>

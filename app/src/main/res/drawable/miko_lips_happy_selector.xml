@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/miko_lips_happy_talking"
+        android:state_selected="true"
+        android:id="@+id/on"/>
+
+    <item android:drawable="@drawable/miko_lips_happy"
+        android:id="@+id/off"/>
+
+    <transition
+        android:fromId="@id/on"
+        android:toId="@id/off"
+        android:drawable="@drawable/miko_lips_happy"/>
+
+    <transition
+        android:fromId="@id/off"
+        android:toId="@id/on"
+        android:drawable="@drawable/miko_lips_happy_talking"/>
+
+
+
+</animated-selector>
