@@ -121,10 +121,10 @@ class PdfActivity:AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        val f = File(filePath!!)
-        if (f.exists()) {
-
-            f.delete()
-        }
+//        val f = File(filePath!!)
+//        if (f.exists()) {
+//
+//            f.delete()
+//        }
     }
 }

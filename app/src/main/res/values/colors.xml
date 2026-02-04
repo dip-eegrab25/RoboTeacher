@@ -11,4 +11,5 @@
     <color name="yellow_panda_logo_color">#FFDA03</color>
     <color name="text_color_chat">#54718d</color>
     <color name="chat_edit_text_color">#09161f</color>
+    <color name="beige">#f5f5dc</color>
 </resources>

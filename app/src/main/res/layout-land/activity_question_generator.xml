@@ -148,6 +148,7 @@
             android:orientation="vertical"
             android:src="@drawable/chat_start_stop_toggle"
             android:visibility="gone"
+            android:id="@+id/start_stop_toggle"
             />
 
         <LinearLayout

@@ -349,7 +349,7 @@ If the discriminant were negative, you would get a square root of a negative num
 
 		val pdfView:PDFView = findViewById(R.id.pdfView)
 
-	   val path = Utils.generatePdfNew1(applicationContext,s4)
+	   val path = Utils.generatePdfNew1(applicationContext,eqStr)
 
 		startActivity(
 			Intent(this@SampleActivity, PdfActivity::class.java)

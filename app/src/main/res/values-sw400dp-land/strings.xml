@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="your_feedback">Your Feedback</string>
     <string name="submit">Submit</string>
@@ -20,4 +19,6 @@
     <string name="app_name">RoboTeacher</string>
     <string name="enter">Enter</string>
     <string name="hint_chat_edittext">Just say topic or you can write here. I am ready to go.</string>
+    <string name="lock_mode">Lock Mode</string>
+    <string name="enter_otp">Enter OTP</string>
 </resources>

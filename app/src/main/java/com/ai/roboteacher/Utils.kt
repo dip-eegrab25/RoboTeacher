@@ -43,6 +43,28 @@ object Utils {
     fun markdownToTts(text: String): String {
         var t = text
 
+        t = t.replace(Regex("<mode>(.+)</mode>",RegexOption.DOT_MATCHES_ALL),"")
+
+        val qRegex = Regex("<sugq>(.*)</sugq>",RegexOption.DOT_MATCHES_ALL)
+
+        val m:MatchResult? = qRegex.find(t);
+
+        if (m!=null) {
+
+            var sugq:String = "**Suggested questions:**\n\n${m.value}"
+            Log.d(Utils::class.java.name, "Suggestions: "+sugq)
+            sugq = sugq.replace("<sugq>","-")
+                .replace("</sugq>","")
+
+            t = t.replace(qRegex) {
+                sugq
+            }
+
+        } else {
+
+            t = t.replace("<sugq>","").replace("</sugq>","")
+        }
+
         t = t.replace(Regex("^\\s*|^[-\\s]*|^[#\\s]*",RegexOption.MULTILINE),"")
 
 
@@ -55,6 +77,7 @@ object Utils {
         t = t.replace(Regex("^\\|([|\\-]+)\\|", RegexOption.MULTILINE), "")
 
         t = t.replace("|","")
+
 
         // Remove bold / italic
         t = t.replace(Regex("\\*\\*(.*?)\\*\\*"), "$1")
@@ -91,13 +114,13 @@ object Utils {
 
         var regex = Regex("\\\\frac\\{(.*?)\\}\\{(.*?)\\}")
 
-        var m:MatchResult? = regex.find(t)
+        var m1:MatchResult? = regex.find(t)
 
-        while (m!=null) {
+        while (m1!=null) {
 
-            t = t.replace(m.groupValues[0],"${m.groupValues[1]} divided by ${m.groupValues[2]}")
+            t = t.replace(m1.groupValues[0],"${m1.groupValues[1]} divided by ${m1.groupValues[2]}")
 
-            m = regex.find(t)
+            m1 = regex.find(t)
 
         }
 
@@ -110,6 +133,8 @@ object Utils {
 
         // Remove remaining LaTeX symbols
         t = t.replace(Regex("[{}\\\\]"), "")
+
+        Log.d(Utils::class.java.name, "markdownToTts: "+t)
 
 
 //        // Normalize whitespace
@@ -495,7 +520,7 @@ object Utils {
                         page = renderTable(match,pdfDocument,page,pdfModel,pWidth,pLimit
                             ,pagewidth
                             ,pageHeight
-                            ,startX,startY)
+                            ,startX,startY, p)
 
                         pdfModel.p.x = startX
                         pdfModel.p.y+=25f
@@ -604,7 +629,7 @@ object Utils {
 
         val p = Paint()
         p!!.isAntiAlias = true
-        p!!.textSize = 20f
+        p!!.textSize = 18f
         p!!.color = Color.BLACK
 
 
@@ -617,7 +642,7 @@ object Utils {
 //        var yPosition = 25f
         var pageNumber = 1
 
-        var startX = pagewidth*0.20f
+        var startX = pagewidth*0.10f
         val x1 = startX
         val pLimit = pagewidth-startX
         var startY = 50f
@@ -627,9 +652,12 @@ object Utils {
         var page = pdfDocument.startPage(pageInfo)
         var canvas = page.canvas
 
-
-
-        val dReg = Regex("""\$\$(.*?)\$\$|\$(.*?)\$|\|(.)+\|""",RegexOption.DOT_MATCHES_ALL)
+        val dReg = Regex(
+            """
+    (\|[^\n]+\|(?:\n\s*\n?\|[^\n]+\|)+)|(\$\$[\s\S]+?\$\$)|(\$[^$\n]+\$)
+    """.trimIndent(),
+            setOf(RegexOption.MULTILINE)
+        )
 
         var startIndex = 0
 
@@ -678,76 +706,76 @@ object Utils {
 
         if (m!=null) {
 
-            while (m!=null) {
+            while (m != null) {
 
                 val match = m.value
-                val tValue = m.groupValues[1]
+                val index = data.indexOf(match, startIndex)
 
+                if (index != -1) {
 
+                    val text = data.substring(startIndex, index)
 
-                if (match.contains(Regex("\\|(.)+\\|",RegexOption.DOT_MATCHES_ALL))) {
+                    if (text.isNotBlank()) {
 
-
-
-                    val index = data.indexOf(match,startIndex)
-
-                    if (index!=-1) {
-
-                        val text = data.substring(startIndex,index)
-
-                        if (!text.equals("")) {
-
-                           page = checkPageAndPrint(text,pdfModel,page,pdfDocument
-                               ,p,pLimit,pageHeight-25f,pagewidth,pageHeight,startX,startY)
-
-                            pdfModel.p.x = startX
-                            pdfModel.p.y+=25f
-
-                        }
-
-                        page = renderTable(match,pdfDocument,page,pdfModel,pWidth,pLimit
-                            ,pagewidth
-                            ,pageHeight
-                            ,startX,startY)
-
-                        pdfModel.p.x = startX
-                        pdfModel.p.y+=25f
-
-                        startIndex = index+match.length
-
+                        page = checkPageAndPrint(
+                            text,
+                            pdfModel,
+                            page,
+                            pdfDocument,
+                            p,
+                            pLimit,
+                            pageHeight - 25f,
+                            pagewidth,
+                            pageHeight,
+                            startX,
+                            startY
+                        )
                     }
 
-                    //m = m.next()
+                    when {
+                        // -------- TABLE --------
+                        match.startsWith("|") -> {
 
-                }
+                            Log.d(Utils::class.java.name, "MatchTable: ${match}")
 
-                else if (match.contains(Regex("\\\$\\\$(.*?)\\\$\\\$|\\\$(.*?)\\\$"))) {
+                            page = renderTable(
+                                match,
+                                pdfDocument,
+                                page,
+                                pdfModel,
+                                pWidth,
+                                pLimit,
+                                pagewidth,
+                                pageHeight,
+                                startX,
+                                startY,
+                                p
 
-                    val index = data.indexOf(match,startIndex)
-
-                    if (index!=-1) {
-
-                        val text = data.substring(startIndex,index)
-
-                        if (!text.equals("")) {
-
-                            page = checkPageAndPrint(text,pdfModel,page,pdfDocument
-                                ,p,pLimit,pageHeight-25f,pagewidth,pageHeight,startX,startY)
-
+                            )
                         }
 
-                        page = renderEquation(match,pdfDocument,page,pdfModel,pLimit
-                            ,pagewidth
-                            ,pageHeight,startX,startY,p)
+                        // -------- LATEX --------
+                        match.startsWith("$$") || match.startsWith("$") -> {
 
-                        startIndex = index+match.length
-
+                            page = renderEquation(
+                                match,
+                                pdfDocument,
+                                page,
+                                pdfModel,
+                                pLimit,
+                                pagewidth,
+                                pageHeight,
+                                startX,
+                                startY,
+                                p
+                            )
+                        }
                     }
 
+                    startIndex = index + match.length
                 }
 
                 m = m.next()
-
             }
 
             val residualText = data.substring(startIndex)
@@ -830,17 +858,16 @@ object Utils {
 
             }
 
-
         }
 
         return newPage
-
     }
+
 
     private fun startNewPage(pdfModel: PdfModel
                              ,pdfDocument: PdfDocument
                              ,page:Page
-    ,pagewidth:Int,pageHeight:Int):Page {
+                             ,pagewidth:Int,pageHeight:Int):Page {
 
         pdfDocument.finishPage(page)
         pdfModel.page++
@@ -853,125 +880,214 @@ object Utils {
 
     }
 
-    private fun renderTable(match:String,pdfDocument: PdfDocument,page: Page
-                            ,pdfModel: PdfModel,pWidth:Float,pLimit: Float,pagewidth: Int,pageHeight: Int,
-                            startX: Float,startY: Float
-    ) : Page{
+    private fun renderTable(
+        match: String,
+        pdfDocument: PdfDocument,
+        page: PdfDocument.Page,
+        pdfModel: PdfModel,
+        pWidth: Float,
+        pLimit: Float,
+        pagewidth: Int,
+        pageHeight: Int,
+        startX: Float,
+        startY: Float,
+        textPaint: Paint
+    ): PdfDocument.Page {
 
         var mPage = page
-        var canvas = page.canvas
+        var canvas = mPage.canvas
 
+        val borderPaint = Paint().apply {
+            isAntiAlias = true
+            color = Color.BLACK
+            style = Paint.Style.STROKE
+            strokeWidth = 1f
+        }
 
-        val lines = match.split("\n")
+        val latexRegex = Regex("""\$\$[\s\S]+?\$\$|\$[^$\n]+\$""")
+        val padding = 10f
+        val lineSpacing = textPaint.fontSpacing
 
-        for (l in lines) {
+        // ---------- Parse rows into 2D table ----------
+        val rows = match.split("\n").filter { it.isNotBlank() }
 
-            Log.d(Utils::class.java.name, "renderTable: ${l}")
+        val table = rows.map { row ->
+            row.split("|")
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+        }
 
-            if (l.isNotBlank()) {
+        if (table.isEmpty()) return mPage
 
-                val rList = l.split("|")
-                    .map { it.trim() }
-                    .filter { it.isNotEmpty() }
+        val colCount = table.maxOf { it.size }
+        val colWidths = FloatArray(colCount) { 0f }
 
+        // ---------- PASS 1: Measure column widths ----------
+        for (row in table) {
+            for (i in row.indices) {
 
-                val paint = Paint().apply {
+                val cell = row[i]
+                var maxWidth = 0f
+                var lastIndex = 0
+                var m = latexRegex.find(cell)
 
-                    isAntiAlias = true
-                    color = Color.BLACK
-                    textSize = 16f
-                    style = Paint.Style.STROKE
+                while (m != null) {
+                    val before = cell.substring(lastIndex, m.range.first)
+                    //maxWidth = maxOf(maxWidth, textPaint.measureText(before))
 
+                    maxWidth+=textPaint.measureText(before)
+
+                    val drawable = JLatexMathDrawable.builder(m.value)
+                        .textSize(16f)
+                        .build()
+
+                    //maxWidth = maxOf(maxWidth, drawable.intrinsicWidth.toFloat())
+
+                    maxWidth += drawable.intrinsicWidth.toFloat()
+
+                    lastIndex = m.range.last + 1
+                    m = m.next()
                 }
 
-//            val textPaint = Paint().apply {
-//
-//                isAntiAlias = true
-//                color = Color.BLACK
-//                textSize = 10f
-//                style = Paint.Style.STROKE
-//
-//            }
+                val remaining = cell.substring(lastIndex)
+                //maxWidth = maxOf(maxWidth, textPaint.measureText(remaining))
 
-                val cellWidth = pWidth/rList.size   // fixed width for all columns
-                val padding = 10f
-                val lineSpacing = paint.fontSpacing
+                maxWidth += textPaint.measureText(remaining)
 
-                val lineCounts = rList.map { wrapText(it, cellWidth, paint).size }
-                val maxLines = lineCounts.maxOrNull() ?: 1
-                val rowHeight = maxLines * lineSpacing + padding * 2
+                colWidths[i] = maxOf(colWidths[i], maxWidth + padding * 2)
+            }
+        }
 
-                var x = pdfModel.p.x
-                var y = pdfModel.p.y
+        // ---------- Scale if table exceeds page width ----------
+        val totalWidth = colWidths.sum()
+        if (totalWidth > pWidth) {
+            val scale = pWidth / totalWidth
+            for (i in colWidths.indices) {
+                colWidths[i]*= scale
+            }
+        }
 
-                for (text in rList) {
+        // ---------- PASS 2: Render ----------
+        for (row in table) {
 
-                    if (y+rowHeight>=pageHeight-25) {
+            // ----- Measure row height (TEXT + LATEX) -----
+            var maxRowHeight = 0f
 
-                        pdfDocument.finishPage(mPage)
-                        pdfModel.page++
-                        mPage = pdfDocument.startPage(PageInfo.Builder(pagewidth,pageHeight,pdfModel.page).create())
-                        canvas = mPage.canvas
+            for (i in row.indices) {
+                val cell = row[i]
+                val availableWidth = colWidths[i] - padding * 2
 
-                        pdfModel.p.x = startX
-                        pdfModel.p.y = startY
+                var cellHeight = padding * 2
+                var lastIndex = 0
+                var m = latexRegex.find(cell)
 
-                        x = startX
-                        y = startY
+                while (m != null) {
+                    val before = cell.substring(lastIndex, m.range.first)
+                    val lines = wrapText(before, availableWidth, textPaint)
+                    cellHeight += lines.size * lineSpacing
 
-                    }
+                    val drawable = JLatexMathDrawable.builder(m.value)
+                        .textSize(16f)
+                        .build()
 
+                    cellHeight += drawable.intrinsicHeight + 5f
 
-
-                    // Draw cell rectangle
-                    canvas!!.drawRect(x, y, x+cellWidth, y + rowHeight, paint)
-
-                    // Draw wrapped text
-                    val mlines = wrapText(text, cellWidth, paint)
-                    //paint.style = Paint.Style.FILL
-
-                    for (line in mlines) {
-
-                        if (line.contains(Regex("\\\$\\\$(.*?)\\\$\\\$|\\\$(.*?)\\\$"))) {
-
-                            val drawable = JLatexMathDrawable.builder(line)
-                                .textSize(16f)
-                                .build()
-
-                            val bitmap = Bitmap.createBitmap(
-                                drawable.intrinsicWidth,
-                                drawable.intrinsicHeight,
-                                Bitmap.Config.ARGB_8888
-                            )
-                            val mCanvas = Canvas(bitmap)
-                            //drawable.setBounds(0, 0, canvas.width, canvas.height)
-                            drawable.draw(mCanvas)
-
-                            canvas.drawBitmap(bitmap,x+padding,y+lineSpacing,null)
-
-
-                        } else {
-
-                            canvas.drawText(line, x + padding, y+lineSpacing, paint)
-                            y += lineSpacing
-
-                        }
-
-                    }
-
-                    x += cellWidth
-                    y = pdfModel.p.y
-//                pdfModel.p.y = startY
+                    lastIndex = m.range.last + 1
+                    m = m.next()
                 }
+
+                val remaining = cell.substring(lastIndex)
+                val remainingLines = wrapText(remaining, availableWidth, textPaint)
+                cellHeight += remainingLines.size * lineSpacing
+
+                maxRowHeight = maxOf(maxRowHeight, cellHeight)
+            }
+
+            // ----- Page break -----
+            if (pdfModel.p.y + maxRowHeight >= pageHeight - 25f) {
+                pdfDocument.finishPage(mPage)
+                pdfModel.page++
+
+                mPage = pdfDocument.startPage(
+                    PdfDocument.PageInfo.Builder(pagewidth, pageHeight, pdfModel.page).create()
+                )
+                canvas = mPage.canvas
 
                 pdfModel.p.x = startX
-                pdfModel.p.y+=rowHeight
+                pdfModel.p.y = startY
+            }
 
+            var x = startX
+            val yStart = pdfModel.p.y
+
+            // ----- Draw cells -----
+            for (i in row.indices) {
+
+                val cell = row[i]
+                val cellWidth = colWidths[i]
+                val availableWidth = cellWidth - padding * 2
+
+                // Border
+                canvas.drawRect(
+                    x,
+                    yStart,
+                    x + cellWidth,
+                    yStart + maxRowHeight,
+                    borderPaint
+                )
+
+                var textY = yStart + padding + lineSpacing
+                var lastIndex = 0
+                var m = latexRegex.find(cell)
+
+                while (m != null) {
+
+                    val before = cell.substring(lastIndex, m.range.first)
+                    val beforeLines = wrapText(before, availableWidth, textPaint)
+
+                    for (l in beforeLines) {
+                        canvas.drawText(l, x + padding, textY, textPaint)
+                        textY += lineSpacing
+                    }
+
+                    val drawable = JLatexMathDrawable.builder(m.value)
+                        .textSize(16f)
+                        .build()
+
+                    val bitmap = Bitmap.createBitmap(
+                        drawable.intrinsicWidth,
+                        drawable.intrinsicHeight,
+                        Bitmap.Config.ARGB_8888
+                    )
+
+                    val latexCanvas = Canvas(bitmap)
+                    drawable.draw(latexCanvas)
+
+                    canvas.drawBitmap(bitmap, x + padding, textY-14f, null)
+                    textY += drawable.intrinsicHeight + 5f
+
+                    lastIndex = m.range.last + 1
+                    m = m.next()
+                }
+
+                val remaining = cell.substring(lastIndex)
+                val remainingLines = wrapText(remaining, availableWidth, textPaint)
+                for (l in remainingLines) {
+                    canvas.drawText(l, x + padding, textY, textPaint)
+                    textY += lineSpacing
+                }
+
+                x += cellWidth
             }
-            }
+
+            pdfModel.p.y += maxRowHeight
+        }
+
         return mPage
-
     }
+
+
+
 
     private fun renderEquation(match:String,pdfDocument: PdfDocument,page: Page
                                ,pdfModel: PdfModel,pLimit: Float,pagewidth: Int,pageHeight: Int,
@@ -983,7 +1099,6 @@ object Utils {
         val drawable = JLatexMathDrawable.builder(match)
             .textSize(16f)
             .build()
-
 
 
         val bitmap = Bitmap.createBitmap(
@@ -1059,572 +1174,6 @@ object Utils {
     }
 
 
-    //    public fun generatePDF3(c:Context,d:String):String? {
-//
-//        var regex:Regex = Regex("""\*+|#+""",RegexOption.DOT_MATCHES_ALL)
-//
-//        var headerRegex = Regex("^`+\\w+",RegexOption.MULTILINE)
-//
-//        val data:String = d.replace(regex,"").replace(headerRegex,"").replace("```","")
-//
-//        val pdfDocument = PdfDocument()
-//
-//        val p = Paint()
-//        p!!.isAntiAlias = true
-//        p!!.textSize = 20f
-//        p!!.color = Color.BLACK
-//
-//        val titlePaint = Paint()
-//
-////        val pageWidth = getScreenWidth(c)
-////        val pageWidth = 842f
-//        val pagewidth = getScreenWidth(c)
-//        val pageHeight = getScreenHeight(c)
-//
-////        var xPosition = 295f
-////        var yPosition = 25f
-//        var pageNumber = 1
-//
-//        var startX = pagewidth*0.20f
-//        var x1 = startX
-//        var pLimit = pagewidth-startX
-//        var startY = 100f
-//        var pWidth = pLimit-x1
-//
-//        var pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//        var page = pdfDocument.startPage(pageInfo)
-//        var canvas = page.canvas
-//
-//        val dReg = Regex("""\$\$(.*?)\$\$|\$(.*?)\$|\|(.)+\|""",RegexOption.DOT_MATCHES_ALL)
-//
-//        var startIndex = 0
-//
-//        var index = 0
-//        var endIndex = 0
-//        var eqData = ""
-//        var strBUilder = StringBuilder()
-//
-//        var m: MatchResult? = dReg.find(data)
-//
-//        if (m!=null) {
-//
-//            while (m != null) {
-//                println("Found: ${m.value}")
-//
-//                eqData = m.value
-//
-//                if (eqData.contains("$")) {
-//
-//                    //math
-//
-//                    index = data.indexOf(m.value,startIndex)
-//
-//                    var textData = data.substring(startIndex,index)
-//
-//                    if (!textData.equals("")) {
-//
-//                        val lines = textData.split("\n")
-//
-//                        for (l in lines) {
-//
-//                            val words = l.split(Regex("\\s+"))
-//
-//                            for (w in words) {
-//
-//                                if (startX == x1) {
-//
-//                                    if (startY>pageHeight-25) {
-//
-//                                        pdfDocument.finishPage(page)
-//                                        pageNumber++
-//                                        pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                        page = pdfDocument.startPage(pageInfo)
-//                                        canvas = page.canvas
-//                                        startY = 100f
-//
-//                                    }
-//
-//                                    canvas.drawText("$w ", startX, startY, p!!)
-//                                    startX+=p!!.measureText("$w ")
-//                                    strBUilder.append("$w ")
-//
-//
-//
-//                                } else {
-//
-//                                    var x = p!!.measureText(strBUilder.toString())
-//                                    var wLength = p!!.measureText("$w ")
-//
-//                                    if (startX + wLength >= pLimit) {
-//
-//
-//                                        startX = x1
-//                                        startY += 25f
-//                                        strBUilder.clear()
-//
-//                                        if (startY>pageHeight-25) {
-//
-//                                            pdfDocument.finishPage(page)
-//                                            pageNumber++
-//                                            pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                            page = pdfDocument.startPage(pageInfo)
-//                                            canvas = page.canvas
-//                                            startX = x1
-//                                            startY = 100f
-//
-//                                        }
-//
-//                                        canvas.drawText("$w ", startX, startY, p!!)
-//                                        startX+=wLength
-//                                        strBUilder.append("$w ")
-//
-//                                    } else {
-//
-//                                        if (startY>pageHeight-25) {
-//
-//                                            pdfDocument.finishPage(page)
-//                                            pageNumber++
-//                                            pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                            page = pdfDocument.startPage(pageInfo)
-//                                            canvas = page.canvas
-//                                            startX = x1
-//                                            startY = 100f
-//
-//                                        }
-//
-//                                        canvas.drawText("$w ", startX, startY, p!!)
-//                                        startX+=wLength
-//                                        strBUilder.append("$w ")
-//
-//                                    }
-//
-//                                }
-//
-//                            }
-//
-//                            startX = x1
-//                            startY+=25f
-//                        }
-//
-//                    }
-//
-////render equation
-//                    startX = x1
-//                    //yPosition+=25f
-//
-//                    if (startY>pageHeight-25) {
-//
-//                        pdfDocument.finishPage(page)
-//                        pageNumber++
-//                        pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                        page = pdfDocument.startPage(pageInfo)
-//                        canvas = page.canvas
-//                        startX = x1
-//                        startY = 100f
-//
-//                    }
-//
-//                    val drawable = JLatexMathDrawable.builder(eqData)
-//                        .textSize(20f)
-//                        .build()
-//
-//// Create bitmap
-//                    val bitmap = Bitmap.createBitmap(
-//                        drawable.intrinsicWidth,
-//                        drawable.intrinsicHeight,
-//                        Bitmap.Config.ARGB_8888
-//                    )
-//                    val mCanvas = Canvas(bitmap)
-//                    //drawable.setBounds(0, 0, canvas.width, canvas.height)
-//                    drawable.draw(mCanvas)
-//
-//                    canvas.drawBitmap(bitmap,startX,startY,null)
-//
-//                    startX = x1
-//                    startY+=drawable.intrinsicHeight+25
-//
-//                    startIndex = index+eqData.length
-//
-//                    m = m.next() // Move to the next match
-//
-//                } else if (eqData.contains("|")) {
-//
-//                    index = data.indexOf(eqData,startIndex)
-//                    var textData = data.substring(startIndex,index)
-//
-//                    if (!textData.equals("")) {
-//
-//                        val lines = textData.split("\n")
-//
-//                        for (l in lines) {
-//
-//                            val words = l.split(Regex("\\s+"))
-//
-//                            for (w in words) {
-//
-//                                if (startX == x1) {
-//
-//                                    if (startY>pageHeight-25) {
-//
-//                                        pdfDocument.finishPage(page)
-//                                        pageNumber++
-//                                        pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                        page = pdfDocument.startPage(pageInfo)
-//                                        canvas = page.canvas
-//                                        startY = 100f
-//
-//                                    }
-//
-//                                    canvas.drawText("$w ", startX, startY, p!!)
-//                                    startX+=p!!.measureText("$w ")
-//                                    strBUilder.append("$w ")
-//
-//
-//
-//                                } else {
-//
-//                                    //var x = p!!.measureText(strBUilder.toString())
-//                                    var wLength = p!!.measureText("$w ")
-//
-//                                    if (startX + wLength >= pLimit) {
-//
-//
-//                                        startX = x1
-//                                        startY += 25f
-//                                        strBUilder.clear()
-//
-//                                        if (startY>pageHeight-25) {
-//
-//                                            pdfDocument.finishPage(page)
-//                                            pageNumber++
-//                                            pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                            page = pdfDocument.startPage(pageInfo)
-//                                            canvas = page.canvas
-//                                            startX = x1
-//                                            startY = 100f
-//
-//                                        }
-//
-//                                        canvas.drawText("$w ", startX, startY, p!!)
-//                                        startX+=wLength
-//                                        strBUilder.append("$w ")
-//
-//                                    } else {
-//
-//                                        if (startY>pageHeight-25) {
-//
-//                                            pdfDocument.finishPage(page)
-//                                            pageNumber++
-//                                            pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                            page = pdfDocument.startPage(pageInfo)
-//                                            canvas = page.canvas
-//                                            startX = x1
-//                                            startY = 100f
-//
-//                                        }
-//
-//                                        canvas.drawText("$w ", startX, startY, p!!)
-//                                        startX+=wLength
-//                                        strBUilder.append("$w ")
-//
-//                                    }
-//
-//                                }
-//
-//                            }
-//
-//                            startX = x1
-//                            startY+=25f
-//                        }
-//
-//                    }
-//
-//                    startX = x1
-//
-//                    Log.d(Utils::class.java.name, "generatePDF2: ${eqData}")
-//
-//
-//                    //textData = eqData
-//
-//                    if (!eqData.equals("")) {
-//
-//                        val lines = eqData.split("\n")
-//
-//                        for (l in lines) {
-//
-//                            val r:Regex = Regex("\\|(.*?)\\|",RegexOption.DOT_MATCHES_ALL)
-//
-//                            var m1: MatchResult? = r.find(l)
-//
-//                            if (m1!=null) {
-//
-//                                //val rList = ArrayList<String>()
-//
-//                                val rList = l.split("|")
-//                                    .map { it.trim() }
-//                                    .filter { it.isNotEmpty() }
-//
-//
-//                                val paint = Paint().apply {
-//                                    color = Color.BLACK
-//                                    textSize = 14f
-//                                    style = Paint.Style.STROKE
-//                                }
-//
-//                                val cellWidth = pWidth/rList.size   // fixed width for all columns
-//                                val padding = 10f
-//                                val lineSpacing = paint.fontSpacing
-//
-//                                val lineCounts = rList.map { wrapText(it, cellWidth, paint).size }
-//                                val maxLines = lineCounts.maxOrNull() ?: 1
-//                                val rowHeight = maxLines * lineSpacing + padding * 2
-//
-//                                var x = startX
-//                                for (text in rList) {
-//
-//                                    if (startY+rowHeight>pageHeight-25) {
-//
-//                                        pdfDocument.finishPage(page)
-//                                        pageNumber++
-//                                        pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                        page = pdfDocument.startPage(pageInfo)
-//                                        canvas = page!!.canvas
-//                                        //yPosition = 25f
-//
-//                                        x = startX
-//                                        startY = 100f
-//
-//                                    }
-//                                    // Draw cell rectangle
-//                                    canvas!!.drawRect(x, startY, x + cellWidth, startY + rowHeight, paint)
-//
-//                                    // Draw wrapped text
-//                                    val lines = wrapText(text, cellWidth, paint)
-//                                    paint.style = Paint.Style.FILL
-//                                    var textY = startY + padding + paint.textSize
-//                                    for (line in lines) {
-//                                        canvas!!.drawText(line, x + padding, textY, paint)
-//                                        textY += lineSpacing
-//                                    }
-//                                    paint.style = Paint.Style.STROKE
-//                                    x += cellWidth
-//                                }
-//
-//                                startY+=rowHeight
-//                                Log.d(SampleActivity::class.java.name, "onCreate: ${rList.toString()}")
-//
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                    startX = x1
-//
-//
-//                    startIndex = index+eqData.length
-//                    m = m.next()
-//
-//                    //table
-//                }
-//
-//                Log.d("abcde", "onDraw: "+eqData)
-//
-//
-//            }
-//
-//            var textData = data.substring(startIndex,data.length)
-//
-//            if (!textData.equals("")) {
-//
-//                val lines = textData.split("\n")
-//
-//                for (l in lines) {
-//
-//                    val words = l.split(" ")
-//
-//                    for (w in words) {
-//
-//                        if (startX == x1) {
-//
-//                            if (startY>pageHeight-25) {
-//
-//                                pdfDocument.finishPage(page)
-//                                pageNumber++
-//                                pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                page = pdfDocument.startPage(pageInfo)
-//                                canvas = page.canvas
-//                                startY = 100f
-//
-//                            }
-//
-//                            canvas.drawText("$w ", startX, startY, p!!)
-//                            startX+=p!!.measureText("$w ")
-//                            strBUilder.append("$w ")
-//
-//
-//
-//                        } else {
-//
-//                            var x = startX+ p!!.measureText(strBUilder.toString())
-//                            var wLength = p!!.measureText("$w ")
-//
-//                            if (startX + wLength >= pLimit) {
-//
-//                                startX = x1
-//                                startY += 25f
-//                                strBUilder.clear()
-//
-//                                if (startY>pageHeight-25) {
-//
-//                                    pdfDocument.finishPage(page)
-//                                    pageNumber++
-//                                    pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                    page = pdfDocument.startPage(pageInfo)
-//                                    canvas = page.canvas
-//                                    startX = x1
-//                                    startY = 100f
-//
-//                                }
-//
-//                                canvas.drawText("$w ", startX, startY, p!!)
-//                                startX+=wLength
-//                                strBUilder.append("$w ")
-//
-//                            } else {
-//
-//                                if (startY>pageHeight-25) {
-//
-//                                    pdfDocument.finishPage(page)
-//                                    pageNumber++
-//                                    pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                    page = pdfDocument.startPage(pageInfo)
-//                                    canvas = page.canvas
-//                                    startX = x1
-//                                    startY = 100f
-//
-//                                }
-//
-//                                canvas.drawText("$w ", startX, startY, p!!)
-//                                startX+=wLength
-//                                strBUilder.append("$w ")
-//
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                    startX = x1
-//                    startY+=25f
-//                }
-//
-//            }
-//
-////
-//
-//        } else {
-//
-//            if (!data.equals("")) {
-//
-//                val lines = data.split("\n")
-//
-//                for (l in lines) {
-//
-//                    val words = l.split(" ")
-//
-//                    for (ww in words) {
-//
-//                        Log.d(SampleTextView::class.java.name, "Word "+ww)
-//                    }
-//
-//
-//                    for (w in words) {
-//
-//                        if (startX == x1) {
-//
-//                            if (startY>pageHeight-25) {
-//
-//                                pdfDocument.finishPage(page)
-//                                pageNumber++
-//                                pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                page = pdfDocument.startPage(pageInfo)
-//                                canvas = page.canvas
-//                                startY = 100f
-//
-//                            }
-//
-//                            canvas.drawText("$w ", startX, startY, p!!)
-//                            startX+=p!!.measureText("$w ")
-//                            strBUilder.append("$w ")
-//
-//
-//
-//                        } else {
-//
-//                            var x = p!!.measureText(strBUilder.toString())
-//                            var wLength = p!!.measureText("$w ")
-//
-//                            if (startX + wLength >= pLimit) {
-//
-//
-//                                startX = x1
-//                                startY += 25f
-//                                strBUilder.clear()
-//
-//                                if (startY>pageHeight-25) {
-//
-//                                    pdfDocument.finishPage(page)
-//                                    pageNumber++
-//                                    pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                    page = pdfDocument.startPage(pageInfo)
-//                                    canvas = page.canvas
-//                                    startX = x1
-//                                    startY = 100f
-//
-//                                }
-//
-//                                canvas.drawText("$w ", startX, startY, p!!)
-//                                startX+=wLength
-//                                strBUilder.append("$w ")
-//
-//                            } else {
-//
-//                                if (startY>pageHeight-25) {
-//
-//                                    pdfDocument.finishPage(page)
-//                                    pageNumber++
-//                                    pageInfo = PdfDocument.PageInfo.Builder(pagewidth,pageHeight,pageNumber).create()
-//                                    page = pdfDocument.startPage(pageInfo)
-//                                    canvas = page.canvas
-//                                    startX = x1
-//                                    startY = 100f
-//
-//                                }
-//
-//                                canvas.drawText("$w ", startX, startY, p!!)
-//                                startX+=wLength
-//                                strBUilder.append("$w ")
-//
-//                            }
-//
-//                        }
-//
-//                    }
-//
-//                    startX = x1
-//                    startY+=25f
-//                }
-//
-//            }
-//        }
-//
-//        pdfDocument.finishPage(page)
-//
-//        return savePDF(c,pdfDocument)
-//
-////        return null
-//    }
 
     fun wrapText(text: String, maxWidth: Float, paint: Paint): List<String> {
         val padding = 10f
@@ -1634,7 +1183,7 @@ object Utils {
 
         for (word in words) {
             val testLine = if (currentLine.isEmpty()) word else currentLine.toString() + " " + word
-            if (paint.measureText(testLine) > maxWidth - 2 * padding) {
+            if (paint.measureText(testLine) > maxWidth) {
                 lines.add(currentLine.toString())
                 currentLine = StringBuilder(word)
             } else {

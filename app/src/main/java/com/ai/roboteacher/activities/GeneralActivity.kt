@@ -140,6 +140,7 @@ class GeneralActivity : AppCompatActivity()
     var quesNo = 0
     var pdfMap = mutableMapOf<Int,Pair<String,StringBuilder>?>()
     var powerOff:ImageView?=null
+    var settings:ImageView?=null
     private var statusServiceConnection:StatusServiceConnection?=null
     var isTurnedOff = false
     var scWidth:Float = 0f
@@ -185,6 +186,8 @@ class GeneralActivity : AppCompatActivity()
                     Direction.RIGHT-> {
 
                         powerOff!!.animate().translationX(scWidth).start()
+                        settings!!.animate().translationX(scWidth).start()
+
                         Log.d(TAG, "Swiped")
 
                     }
@@ -193,6 +196,7 @@ class GeneralActivity : AppCompatActivity()
 
                         Log.d(TAG, "Swiped Left")
                         powerOff!!.animate().translationX(0f).start()
+                        settings!!.animate().translationX(0f).start()
 
 
                     }
@@ -251,6 +255,7 @@ class GeneralActivity : AppCompatActivity()
 
         dataRecycler = findViewById(R.id.data_recycler)
         powerOff = findViewById(R.id.power_off)
+        settings = findViewById(R.id.settings)
         langDropDown = findViewById(R.id.lang_selector)
         thinkingRoot = findViewById(R.id.t_root)
 
@@ -313,6 +318,24 @@ class GeneralActivity : AppCompatActivity()
             powerOff!!.animate().translationX(scWidth).start()
 
         }
+
+        settings!!.post {
+
+
+            settings!!.animate().translationX(scWidth).start()
+
+        }
+
+        settings!!.setOnClickListener {
+
+            showSettingsPasswordDialog()
+
+            //startActivity(Intent(this,SettingsActivity::class.java))
+
+
+        }
+
+
 
         //turn screen off
         powerOff!!.setOnClickListener {
@@ -622,6 +645,8 @@ class GeneralActivity : AppCompatActivity()
         if (dpm.isLockTaskPermitted(packageName)) {
             startLockTask()
         } else {
+
+
             //Toast.makeText(this, "Lock task not permitted", Toast.LENGTH_SHORT).show()
         }
     }
@@ -2167,6 +2192,8 @@ class GeneralActivity : AppCompatActivity()
                 valueAnim!!.setMyAnimListener(object : MyValueAnimator.AnimListener{
                     override fun onValueReceived(value: Float) {
 
+                        Log.d(TAG, "My Val: $value")
+
                         textView.alpha = value
 
                     }
@@ -2250,7 +2277,7 @@ class GeneralActivity : AppCompatActivity()
 
     }
 
-    val respBuilder = StringBuilder()
+    var respBuilder = StringBuilder()
 
     //dataListener functions(onDataReceived(success),onError(exception))
 
@@ -2278,45 +2305,56 @@ class GeneralActivity : AppCompatActivity()
 
                 }
 
+
+
                 //show valid lines(!Ended means valid lines)
 
                 if (!isEnded) {
 
                     respBuilder.append(line)
+                   respBuilder.replace(Regex("<mode>(.+)</mode>",RegexOption.DOT_MATCHES_ALL),"")
+
+                    dataSet.get(index).spannableStringBuilder.clear()
+                    dataSet.get(index).spannableStringBuilder.append(respBuilder.toString())
+                    chatAdapter!!.notifyItemChanged(index)
+                } else {
+
                     var s = respBuilder.toString()
+                    s.replace(Regex("<mode>(.+)</mode>",RegexOption.DOT_MATCHES_ALL),"")
 
-                        val tMatcher = thinkPattern!!.matcher(s) //detect <think>...</think>
-                        val mMatcher = modePattern!!.matcher(s) //detect <mode>...</mode>
 
-                        if (tMatcher.find()) {
+                    val tMatcher = thinkPattern!!.matcher(s) //detect <think>...</think>
+                    val mMatcher = modePattern!!.matcher(s) //detect <mode>...</mode>
 
-                            //replace think and update counter
-                            s = s.replace(s.substring(tMatcher.start(),tMatcher.end()),"")
-                            mCount++
+                    if (tMatcher.find()) {
+
+                        //replace think and update counter
+                        s = s.replace(s.substring(tMatcher.start(),tMatcher.end()),"")
+                        mCount++
+                    }
+
+                    //find mode tag and extract the text within
+                    if (mMatcher.find()) {
+
+                        modee = mMatcher.group(1) //extract the text within
+                        Log.d(TAG, "Mode: " + modee)
+                        s = s.replace(mMatcher.group(0)!!,"")//replace the whole line with ""
+
+                        if (mCount<1) {
+
+                            mCount++// update count
+                            setMode(modee!!) //set robo exp based on mode
+
+
                         }
 
-                        //find mode tag and extract the text within
-                        if (mMatcher.find()) {
+                    }
 
-                            modee = mMatcher.group(1) //extract the text within
-                            Log.d(TAG, "Mode: " + modee)
-                            s = s.replace(mMatcher.group(0)!!,"")//replace the whole line with ""
+                    //replace [,], [, ],(,), (, ) with $$
 
-                            if (mCount<1) {
+                    // (mCount == 1) {
 
-                                mCount++// update count
-                                setMode(modee!!) //set robo exp based on mode
-
-
-                            }
-
-                        }
-
-                        //replace [,], [, ],(,), (, ) with $$
-
-                        if (mCount == 1) {
-
-                            s = Utils.normalizeLatexDelimiters(s)
+                        s = Utils.normalizeLatexDelimiters(s)
 
 //                        s = s.replace("\\[","$$")
 //                        s = s.replace("\\[ ","$$")
@@ -2328,64 +2366,51 @@ class GeneralActivity : AppCompatActivity()
 //                        s = s.replace(" \\)","$")
                         s = replaceSingleDollars(s) //replace single dollars with double dollars
 
-                            val qRegex = Regex("<sugq>(.*)</sugq>",RegexOption.DOT_MATCHES_ALL)
+                        val qRegex = Regex("<sugq>(.*)</sugq>",RegexOption.DOT_MATCHES_ALL)
 
-                            val m:MatchResult? = qRegex.find(s);
+                        val m:MatchResult? = qRegex.find(s);
 
-                            if (m!=null) {
+                        if (m!=null) {
 
-                                var sugq:String = "**Suggested questions:**\n\n${m.value}"
-                                Log.d(TAG, "Suggestions: "+sugq)
-                                sugq = sugq.replace("<sugq>","-")
-                                    .replace("</sugq>","")
+                            var sugq:String = "**Suggested questions:**\n\n${m.value}"
+                            Log.d(TAG, "Suggestions: "+sugq)
+                            sugq = sugq.replace("<sugq>","-")
+                                .replace("</sugq>","")
 
-                                s = s.replace(qRegex) {
-                                    sugq
-                                }
-
+                            s = s.replace(qRegex) {
+                                sugq
                             }
 
-                            val node = markWon!!.parse(s)
+                        } else {
 
-
-                            Log.d(TAG, "onDataReceived: "+ s)
-
-                            //add the string to dataset
-
-                            dataSet.get(index).renderedMarkDown = markWon!!.render(node)
-                            chatAdapter!!.notifyItemChanged(index)
-
-//                            dataRecycler!!.post {
-//
-//                                chatAdapter!!.notifyItemChanged(index)
-//
-//
-//                            }
-
-
-
-                            //speech regex(replaces math latex,<page> tag etc for speech)
-
-                            //val regex = Regex("""(^\s*\|[-\s|]+\|\s*$)|([*#]+\s*)|(<page>\[[0-9]+\]</page>)|([-]+)|(\[.*?])|(\^)|(\bsqrt\b)|([=+\-*/<>\]\[])|([∑∫π√])|\$|\$\$|\\frac|`+|<sugq>|</sugq>""", RegexOption.MULTILINE)
-
-                            //var qList = renderedMarkdown.toString().split(Regex("\\s{2,}",RegexOption.DOT_MATCHES_ALL))
-
-                            pdfMap.get(quesNo)!!.second.clear().append(respBuilder.toString())
-
-//                            sendForSpeech(Utils.markdownToTts(s))//replace the speech regex with ""
-                            //lineCount++ // increment lineCount(will be used in utteranceProgressListener)
-
+                            s = s.replace("<sugq>","").replace("</sugq>","")
                         }
 
+                        val node = markWon!!.parse(s)
 
 
-                } else {
+                        Log.d(TAG, "onDataReceived: "+ s)
+
+                        //add the string to dataset
+
+                        dataSet.get(index).renderedMarkDown = markWon!!.render(node)
+                        chatAdapter!!.notifyItemChanged(index)
+
+//
+
+
+                        pdfMap.get(quesNo)!!.second.clear().append(respBuilder.toString())
+
+//                            sendForSpeech(Utils.markdownToTts(s))//replace the speech regex with ""
+                        //lineCount++ // increment lineCount(will be used in utteranceProgressListener)
+
+                    //}
 
                     //if Ended the show Download PDF
 
                     Log.d(TAG, "Ended")
 
-                    var s = "Download Pdf"
+                    val s1 = "Download Pdf"
 
                     sendForSpeech(Utils.markdownToTts(pdfMap.get(quesNo)?.second.toString()))//replace the speech regex with ""
                     lineCount++
@@ -2393,9 +2418,9 @@ class GeneralActivity : AppCompatActivity()
                     dataSet.add(
                         DataSet(
                             System.currentTimeMillis(),
-                            MySpannableStringBuilder(s).apply {
+                            MySpannableStringBuilder(s1).apply {
 
-                                setSpan(ForegroundColorSpan(Color.BLUE),0,s.length,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                setSpan(ForegroundColorSpan(Color.BLUE),0,s1.length,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
                             }
 
@@ -2894,6 +2919,40 @@ class GeneralActivity : AppCompatActivity()
     var progressText:TextView?=null
     var progressMsg:TextView?=null
     var titleText:TextView?=null
+
+    private fun showSettingsPasswordDialog() {
+
+        val settingsPasswordDialog = CustomDialogBox()
+            .buildDialog(this@GeneralActivity,R.layout.settings_password_dialog)
+            .setSize((Utils.getScreenWidth(this@GeneralActivity)*0.40).toInt(),(Utils.getScreenHeight(this@GeneralActivity)*0.36).toInt())
+            .createDialog()
+
+        val editTextOtp:EditText = settingsPasswordDialog.findViewById(R.id.editText_otp)
+
+        val submit:Button = settingsPasswordDialog.findViewById(R.id.submit_button)
+
+        submit.setOnClickListener {
+
+            if (editTextOtp.text.toString().isBlank()) {
+
+                return@setOnClickListener
+
+            } else if (editTextOtp.text.toString().equals("1234")) {
+
+                settingsPasswordDialog.dismiss()
+                startActivity(Intent(this,SettingsActivity::class.java))
+
+
+            } else {
+
+                Toast.makeText(this,"Incorrect Password",Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        settingsPasswordDialog.show()
+
+    }
 
     override fun onDownloadStarted() {
 

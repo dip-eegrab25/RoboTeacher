@@ -73,9 +73,6 @@ import com.ai.roboteacher.StatusService
 import com.ai.roboteacher.TextToSpeechInstance
 import com.ai.roboteacher.Utils
 
-
-
-
 import io.noties.markwon.Markwon
 import io.noties.markwon.ext.latex.JLatexMathPlugin
 import io.noties.markwon.ext.tables.TablePlugin
@@ -101,6 +98,8 @@ import kotlin.random.Random
 
 class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
 ,ModelDownloadTask.ModelDownloadListener{
+
+
 
     private val TAG = ChatActivity::class.java.name
 
@@ -173,6 +172,7 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
         setContentView(R.layout.activity_chat)
 
         statusServiceConnection = StatusServiceConnection()
+
 
         //initialize Whisper
 //        WhisperInstance.getInstance(this)
@@ -874,38 +874,45 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
 
 
                                 //reset Thinking Anim
-                                if (dataSet.get(index).isAnim) {
 
-                                    var errorStr = SpannableString("Stopped by user")
-                                    errorStr.setSpan(ForegroundColorSpan(Color.RED),0,errorStr.length,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                if (index!=-1) {
+
+                                    if (dataSet.get(index).isAnim) {
+
+                                        var errorStr = SpannableString("Stopped by user")
+                                        errorStr.setSpan(ForegroundColorSpan(Color.RED),0,errorStr.length,SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
 
 
-                                    dataSet.get(index).spannableStringBuilder.clear()
-                                    dataSet.get(index).spannableStringBuilder.append(errorStr)
-                                    dataSet.get(index).isError = true
+                                        dataSet.get(index).spannableStringBuilder.clear()
+                                        dataSet.get(index).spannableStringBuilder.append(errorStr)
+                                        dataSet.get(index).isError = true
 
-                                    dataSet.get(index).isAnim = false
+                                        dataSet.get(index).isAnim = false
 
-                                    chatAdapter!!.notifyItemChanged(index)
+                                        chatAdapter!!.notifyItemChanged(index)
 
-                                } else {
+                                    } else {
 
-                                    // change the ongoing speech text to white
+                                        // change the ongoing speech text to white
 
-                                    if (onGoingIndex != -1) {
+                                        if (onGoingIndex != -1) {
 
-                                        chatRecyclerView.post {
+                                            chatRecyclerView.post {
 
-                                            dataSet.get(onGoingIndex).isProcess = false
+                                                dataSet.get(onGoingIndex).isProcess = false
 
-                                            chatAdapter.notifyItemChanged(onGoingIndex)
+                                                chatAdapter.notifyItemChanged(onGoingIndex)
 
-                                            chatRecyclerView.scrollToPosition(onGoingIndex)
+                                                chatRecyclerView.scrollToPosition(onGoingIndex)
+                                            }
+
+
                                         }
-
-
                                     }
+
+
                                 }
+
 
                             }
 
@@ -1282,6 +1289,15 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
                 tv.post {
                     if (tv.tag != tag) return@post
                     markWon!!.setParsedMarkdown(tv, renderedMarkdown)
+
+                    if (item.isProcess) {
+                        tv.setTextColor(
+                            ContextCompat.getColor(
+                                this@ChatActivity,
+                                R.color.yellow_panda_logo_color
+                            )
+                        )
+                    }
                 }
 
             } else {
@@ -1289,10 +1305,10 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
                 tv.text = item.spannableStringBuilder
             }
 
-            if (item.isProcess) {
-
-                tv.setTextColor(resources.getColor(R.color.yellow_panda_logo_color))
-            }
+//            if (item.isProcess) {
+//
+//                tv.setTextColor(resources.getColor(R.color.yellow_panda_logo_color))
+//            }
 
 
 
@@ -1831,6 +1847,12 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
                 pagesSpanBuilder.setSpan(object : ClickableSpan(){
                     override fun onClick(widget: View) {
 
+                        val subjectName = subject!!.trim().split(" ")
+                        if (subjectName.size>1) {
+
+                            subject = "${subjectName[0]}_${subjectName[1]}"
+                        }
+
                         val urlStr = String.format(OkHttpClientInstance.pfdUrl,classId,subject!!.lowercase(),subject!!.lowercase())
 
                         Log.d(TAG, "ClassIdPdf: "+urlStr)
@@ -1896,6 +1918,8 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
                                 }
 
                             } catch (ex: Exception) {
+
+                                ex.printStackTrace()
 
                                 withContext(Dispatchers.Main) {
                                     customDialog.dismiss()
@@ -1986,31 +2010,28 @@ class ChatActivity:AppCompatActivity(),KtorDataReceiver.KtorDataListener
                     var s = respStrBuilder.toString()
 
 
-                        s = Utils.normalizeLatexDelimiters(s)
-
-//                    s = s.replace("\\[ ","$$ ")
-//                    s = s.replace("\\[","$$ ")
-//                    s = s.replace(" \\]","$$ ")
-//                    s = s.replace("\\]","$$ ")
-//                    s = s.replace("\\( ","$$ ")
-//                    s = s.replace("\\(","$$ ")
-//                    s = s.replace(" \\)"," $$")
-//                    s = s.replace("\\)"," $$")
-                        //s = replaceSingleDollars(s)
-
-                        val node = markWon!!.parse(s)
-
-                        dataSet.get(dataSet.size-1).renderedMarkDown = markWon!!.render(node)
-
-                        chatRecyclerView.post {
-
-                            chatAdapter.notifyItemChanged(dataSet.size-1)
-
-                        }
 
                         //highlight page nos
 
                         highlightPageNumber(s)
+
+                    s = Utils.normalizeLatexDelimiters(s)
+
+                    val regex = Regex("\\[(\\d+(,\\s*\\d+)*)]")
+
+                    s = s.replace(regex,"")
+
+                    val node = markWon!!.parse(s)
+
+                    dataSet.get(index).renderedMarkDown = markWon!!.render(node)
+
+                    chatRecyclerView.post {
+
+                        chatAdapter.notifyItemChanged(index)
+
+                    }
+
+
 
                 } else {
 

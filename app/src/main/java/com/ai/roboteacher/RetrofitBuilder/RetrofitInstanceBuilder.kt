@@ -12,6 +12,8 @@ object RetrofitInstanceBuilder {
 
      const val BASEURL = "http://192.168.1.41:8012"
 
+    //const val BASEURL = "http://51.20.177.106:8012"
+    
      var STUDY = "/study"
      const val GENERIC_TASK = "/generic-tasks"
      const val GENERAL_PURPOSE_ASSISTANT = "/general-purpose-assistant/"

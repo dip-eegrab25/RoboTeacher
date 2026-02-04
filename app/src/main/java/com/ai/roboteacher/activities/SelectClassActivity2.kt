@@ -1553,20 +1553,19 @@ class SelectClassActivity2:AppCompatActivity() {
 
                                 Log.d(SelectClassActivity2::class.java.name, "WordClass: ${tClass}")
 
-                                val n = when(tClass){
+                                val n = when (tClass) {
 
-                                    "1"->"one"
-                                    "2"->"two"
-                                    "3"->"three"
-                                    "4"->"four"
-                                    "5"->"five"
-                                    "6"->"six"
-                                    "7"->"seven"
-                                    "8"->"eight"
+                                    "1" -> "one"
+                                    "2" -> "two"
+                                    "3" -> "three"
+                                    "4" -> "four"
+                                    "5" -> "five"
+                                    "6" -> "six"
+                                    "7" -> "seven"
+                                    "8" -> "eight"
 
 
-                                    else->"0"
-
+                                    else -> "0"
 
 
                                 }
@@ -1579,17 +1578,19 @@ class SelectClassActivity2:AppCompatActivity() {
 
                         })
 
+                    }
+
                         if (apiCount == 1) {
 
                             if (data.get(i).id == classApiData!!.`class`!!.id) {
 //
-                                isSelected = true
-                                isClickable = true
+                                textViewArrs.get(textViewArrs.size-1).isSelected = true
+                                textViewArrs.get(textViewArrs.size-1).isClickable = true
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.WHITE)
                                 v = textViewArrs.get(textViewArrs.size-1).text.toString().lowercase()
                                 Log.d(SelectClassActivity2::class.java.name, "assignLabelsAndClicks: "+v)
 
-                                setOnClickListener {
+                                textViewArrs.get(textViewArrs.size-1).setOnClickListener {
 
                                     var index = classLabelArr!!.indexOf(data.get(i).name.toLowerCase())
 
@@ -1616,14 +1617,11 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             } else {
 
-                                isSelected = false
-                                isClickable = false
+                                textViewArrs.get(textViewArrs.size-1).isSelected = false
+                                textViewArrs.get(textViewArrs.size-1).isClickable = false
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.GRAY)
 
-                                setOnClickListener {
 
-
-                                }
                             }
 
 
@@ -1631,13 +1629,13 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             if (data.get(i).id == classApiData!!.subject!!.id) {
 //
-                                isSelected = true
-                                isClickable = true
+                                textViewArrs.get(textViewArrs.size-1).isSelected = true
+                                textViewArrs.get(textViewArrs.size-1).isClickable = true
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.WHITE)
                                 v = textViewArrs.get(textViewArrs.size-1).text.toString().lowercase()
                                 Log.d(SelectClassActivity2::class.java.name, "assignLabelsAndClicks: "+v)
 
-                                setOnClickListener {
+                                textViewArrs.get(textViewArrs.size-1).setOnClickListener {
 
                                     var index = classLabelArr!!.indexOf(data.get(i).name.toLowerCase())
 
@@ -1666,14 +1664,14 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             } else {
 
-                                isSelected = false
-                                isClickable = false
+                                textViewArrs.get(textViewArrs.size-1).isSelected = false
+                                textViewArrs.get(textViewArrs.size-1).isClickable = false
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.GRAY)
 
-                                setOnClickListener {
-
-
-                                }
+//                                setOnClickListener {
+//
+//
+//                                }
                             }
 
 
@@ -1683,7 +1681,7 @@ class SelectClassActivity2:AppCompatActivity() {
 
 
 
-                    }
+
 
                 }
 
@@ -1702,7 +1700,7 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             text = data.get(i).name
 
-                            Log.d(SelectClassActivity2::class.java.name, "Class: "+text)
+                            Log.d(SelectClassActivity2::class.java.name, "Class: " + text)
                             classLabelArr!!.add(text.toString().toLowerCase())
 
                             if (apiCount == 1) {
@@ -1711,20 +1709,19 @@ class SelectClassActivity2:AppCompatActivity() {
 
                                 Log.d(SelectClassActivity2::class.java.name, "WordClass: ${tClass}")
 
-                                val n = when(tClass){
+                                val n = when (tClass) {
 
-                                    "1"->"one"
-                                    "2"->"two"
-                                    "3"->"three"
-                                    "4"->"four"
-                                    "5"->"five"
-                                    "6"->"six"
-                                    "7"->"seven"
-                                    "8"->"eight"
+                                    "1" -> "one"
+                                    "2" -> "two"
+                                    "3" -> "three"
+                                    "4" -> "four"
+                                    "5" -> "five"
+                                    "6" -> "six"
+                                    "7" -> "seven"
+                                    "8" -> "eight"
 
 
-                                    else->"0"
-
+                                    else -> "0"
 
 
                                 }
@@ -1736,18 +1733,19 @@ class SelectClassActivity2:AppCompatActivity() {
 
 
                         })
+                    }
 
                         if (apiCount == 1) {
 
                             if (data.get(i).id == classApiData!!.`class`!!.id) {
 //
-                                isSelected = true
-                                isClickable = true
+                                textViewArrs.get(textViewArrs.size-1).isSelected = true
+                                textViewArrs.get(textViewArrs.size-1).isClickable = true
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.WHITE)
                                 v = textViewArrs.get(textViewArrs.size-1).text.toString().lowercase()
                                 Log.d(SelectClassActivity2::class.java.name, "assignLabelsAndClicks: "+v)
 
-                                setOnClickListener {
+                                textViewArrs.get(textViewArrs.size-1).setOnClickListener {
 
                                     var index = classLabelArr!!.indexOf(data.get(i).name.toLowerCase())
 
@@ -1778,13 +1776,13 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             } else {
 
-                                isSelected = false
-                                isClickable = false
+                                textViewArrs.get(textViewArrs.size-1).isSelected = false
+                                textViewArrs.get(textViewArrs.size-1).isClickable = false
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.GRAY)
-                                setOnClickListener {
-
-
-                                }
+//                                setOnClickListener {
+//
+//
+//                                }
                             }
 
 
@@ -1792,13 +1790,13 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             if (data.get(i).id == classApiData!!.subject!!.id) {
 //
-                                isSelected = true
-                                isClickable = true
+                                textViewArrs.get(textViewArrs.size-1).isSelected = true
+                                textViewArrs.get(textViewArrs.size-1).isClickable = true
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.WHITE)
                                 v = textViewArrs.get(textViewArrs.size-1).text.toString().lowercase()
                                 Log.d(SelectClassActivity2::class.java.name, "assignLabelsAndClicks: "+v)
 
-                                setOnClickListener {
+                                textViewArrs.get(textViewArrs.size-1).setOnClickListener {
 
                                     var index = classLabelArr!!.indexOf(data.get(i).name.toLowerCase())
 
@@ -1829,13 +1827,13 @@ class SelectClassActivity2:AppCompatActivity() {
 
                             } else {
 
-                                isSelected = false
-                                isClickable = false
+                                textViewArrs.get(textViewArrs.size-1).isSelected = false
+                                textViewArrs.get(textViewArrs.size-1).isClickable = false
                                 textViewArrs.get(textViewArrs.size-1).setTextColor(Color.GRAY)
-                                setOnClickListener{
-
-
-                                }
+//                                setOnClickListener{
+//
+//
+//                                }
                             }
 
 
@@ -1843,33 +1841,8 @@ class SelectClassActivity2:AppCompatActivity() {
 
                         rightCount++
 
-//                        setOnClickListener {
-//
-//                                var index = classLabelArr!!.indexOf(data.get(i).name)
-//
-//                            if (index!=-1) {
-//
-//                                if (apiCount == 1) {
-//
-//                                    classId = data.get(index).id
-//
-//                                    Log.d(SelectClassActivity2::class.java.name, "ClassId "+classId)
-//
-//                                } else if (apiCount == 2) {
-//
-//                                    subId = data.get(index).id
-//                                    subText = data.get(index).name
-//
-//
-//                                }
-//
-//                            }
-//
-//                            toggleClick()
-//
-//                        }
 
-                    }
+
 
                 }
 
